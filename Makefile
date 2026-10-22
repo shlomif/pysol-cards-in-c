@@ -7,7 +7,7 @@ WRAPPEREXE = pysol_cards_wrap
 
 all: $(WRAPPEREXE)
 
-PYVER = 3.13
+PYVER = 3.14
 COMMON_OPT_FLAGS := -O3 -march=native
 CFLAGS = ` python3-config --cflags ` $(COMMON_OPT_FLAGS)
 LDFLAGS = ` python3-config --ldflags --libs ` -l python$(PYVER)
