@@ -14,6 +14,26 @@ static volatile bool keep_running = true;
 
 static void sigint_handler(int dummy) { keep_running = false; }
 
+long safer_atol(const char * const s)
+{
+    errno = 0;
+    char *endptr = NULL;
+    const long ret = strtol(s, &endptr, 10);
+    if (errno)
+    {
+        exit(1);
+    }
+    if (endptr && endptr[0])
+    {
+        exit(1);
+    }
+    if (ret < 0)
+    {
+        exit(1);
+    }
+    return ret;
+}
+
 int main(int argc, char *argv[])
 {
     if (argc < 3)
@@ -43,12 +63,12 @@ int main(int argc, char *argv[])
             {
                 exit(1);
             }
-            startidx = atol(argv[++argvidx]);
-            endidx = atol(argv[++argvidx]);
+            startidx = safer_atol(argv[++argvidx]);
+            endidx = safer_atol(argv[++argvidx]);
         }
         else
         {
-            endidx = startidx = atol(arg);
+            endidx = startidx = safer_atol(arg);
         }
         for (long deal_idx = startidx; keep_running && (deal_idx <= endidx);
             ++deal_idx)
