@@ -27,7 +27,7 @@ long safer_atol(const char * const s)
     {
         exit(1);
     }
-    if (ret < 0)
+    if (ret <= 0)
     {
         exit(1);
     }
